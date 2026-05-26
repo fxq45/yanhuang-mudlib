@@ -5,13 +5,16 @@ sudo apt update
 # 安装软件包及依赖库
 sudo apt install git bison build-essential autoconf automake cmake gcc g++ libjemalloc-dev zlib1g-dev libssl-dev libmysqlclient-dev libsqlite3-dev libpq-dev libpcre3-dev libevent-dev libicu-dev libdw-dev binutils-dev libgtest-dev telnet python3 -y
 
-# 如果 fluffos 目录不存在，则从 gitee 克隆 fluffos 仓库
+# FluffOS 版本：炎黄 mudlib 需要 v2019 系列驱动，master/v2025 已有大量 breaking change 不兼容
+FLUFFOS_BRANCH="v2019"
+
+# 如果 fluffos 目录不存在，则从 gitee 克隆 fluffos 仓库的 v2019 分支
 if [ ! -d "fluffos" ]; then
-    git clone https://gitee.com/fluffos/fluffos.git
+    git clone --branch "$FLUFFOS_BRANCH" https://gitee.com/fluffos/fluffos.git
 fi
 
-# 进入 fluffos 目录并拉取最新代码
-cd fluffos && git checkout . && git pull
+# 进入 fluffos 目录，确保停留在 v2019 分支并拉取该分支最新代码
+cd fluffos && git checkout . && git checkout "$FLUFFOS_BRANCH" && git pull origin "$FLUFFOS_BRANCH"
 
 # 如果 build 目录已存在，则删除
 if [ -d "build" ]; then
