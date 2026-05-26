@@ -6,7 +6,7 @@
 这是一个中文MUD（多人文字游戏）项目，名为"炎黄群侠传"。基于[mudcore](https://github.com/mudcore/mudcore) 框架开发，使用FluffOS作为游戏驱动。
 
 ## 技术栈
-- **驱动**: FluffOS v2019+ (源码在 `/fluffos` 目录)
+- **驱动**: FluffOS `v2019` 分支（源码在 `/fluffos` 目录，由 `build.sh` / `build_msys2.sh` 自动 clone 该分支）。**注意**: 本 LIB 仅在 FluffOS v2019 系列上验证；upstream 的 `master` / `v2025` 含较多 breaking change（grammar、class、efun 等），不要切到 master，否则编译/运行均会失败。
 - **框架**: mudcore v1.6+ (作为git子模块集成在 `/mudcore`)
 - **语言**: LPC (LPC编程语言)
 - **编码**: UTF-8 (端口6666)、GBK (端口5566)、WebSocket (端口8000)
