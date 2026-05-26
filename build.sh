@@ -16,6 +16,22 @@ fi
 # 进入 fluffos 目录，确保停留在 v2019 分支并拉取该分支最新代码
 cd fluffos && git checkout . && git checkout "$FLUFFOS_BRANCH" && git pull origin "$FLUFFOS_BRANCH"
 
+# 应用本仓库 patches/v2019 下的补丁（v2019 源码在 GCC >= 11 上缺少几个 C++17
+# 头文件，导致 std::optional / std::string_view 编译失败；这是上游 v2019
+# 分支的遗留 bug，本目录下保存最小修补）
+PATCH_DIR="../patches/v2019"
+if [ -d "$PATCH_DIR" ]; then
+    for p in "$PATCH_DIR"/*.patch; do
+        [ -e "$p" ] || break
+        if git apply --check "$p" >/dev/null 2>&1; then
+            echo "Applying patch: $p"
+            git apply "$p"
+        else
+            echo "Skip patch (already applied or not needed): $p"
+        fi
+    done
+fi
+
 # 如果 build 目录已存在，则删除
 if [ -d "build" ]; then
     rm -rf build

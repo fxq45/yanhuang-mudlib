@@ -1,0 +1,26 @@
+diff --git a/src/base/internal/lru_cache.h b/src/base/internal/lru_cache.h
+index 0002daa5..07a70407 100644
+--- a/src/base/internal/lru_cache.h
++++ b/src/base/internal/lru_cache.h
+@@ -13,6 +13,7 @@
+ 
+ #include <unordered_map>
+ #include <list>
++#include <optional>
+ #include <utility>
+ 
+ // a cache which evicts the least recently used item when it is full
+diff --git a/src/base/internal/tracing.h b/src/base/internal/tracing.h
+index fa90585d..9d05225a 100644
+--- a/src/base/internal/tracing.h
++++ b/src/base/internal/tracing.h
+@@ -6,7 +6,9 @@
+ #include <chrono>
+ #endif
+ 
++#include <optional>
+ #include <string>
++#include <string_view>
+ 
+ #include "thirdparty/json/single_include/nlohmann/json.hpp"
+ using json = nlohmann::json;
