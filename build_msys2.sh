@@ -23,6 +23,21 @@ fi
 cd fluffos
 git checkout . && git checkout "$FLUFFOS_BRANCH" && git pull origin "$FLUFFOS_BRANCH"
 
+# 应用本仓库 patches/v2019 下的补丁（v2019 源码在较新的编译器上缺少几个
+# C++17 头文件，导致 std::optional / std::string_view 编译失败）
+PATCH_DIR="../patches/v2019"
+if [ -d "$PATCH_DIR" ]; then
+    for p in "$PATCH_DIR"/*.patch; do
+        [ -e "$p" ] || break
+        if git apply --check "$p" >/dev/null 2>&1; then
+            echo "Applying patch: $p"
+            git apply "$p"
+        else
+            echo "Skip patch (already applied or not needed): $p"
+        fi
+    done
+fi
+
 # 如果 build 目录已存在，则删除
 if [ -d "build" ]; then
     rm -rf build
