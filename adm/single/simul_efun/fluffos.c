@@ -39,3 +39,13 @@ string ltrim(string arg)
     return "";
 }
 #endif
+
+// FluffOS v2019 sockets 包没有 socket_set_option efun（v2021+ 才加上，主要用于 TLS）
+// mudcore/inherit/Http.c 等通过裸名调用，这里提供 no-op stub 让其能编译加载
+// 新版驱动里同名 efun 存在时会优先匹配，simul_efun 自然不会被调到
+#if !efun_defined(socket_set_option)
+int socket_set_option(int fd, int option, mixed value)
+{
+    return 0;
+}
+#endif
