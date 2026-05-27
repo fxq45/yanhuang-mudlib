@@ -32,7 +32,12 @@ void msdp(string req)
 
 void send_msdp_variable(string name, mixed value)
 {
+#if efun_defined(send_msdp_variable)
     efun::send_msdp_variable(name, value);
+#else
+    // FluffOS v2019 没有 send_msdp_variable efun；新版驱动会走上面分支
+    receive("<当前驱动不支持 efun send_msdp_variable()>\n");
+#endif
 }
 
 void zmp_enable()
